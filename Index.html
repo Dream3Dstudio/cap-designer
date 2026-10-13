@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pickleball Cap Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Chango&family=Titan+One&family=Luckiest+Guy&family=Passion+One:wght@900&family=Lilita+One&family=Anton&family=Bebas+Neue&family=League+Spartan:wght@800&family=Racing+Sans+One&family=Oswald:wght@700&family=Satisfy&display=swap" rel="stylesheet">
+<style>*{box-sizing:border-box}body{margin:0;font:15px system-ui,sans-serif;background:#f3f6fa;color:#12263f}
+header{background:#1fb5ea;color:#fff;text-align:center;padding:10px;font-weight:800;font-size:17px}
+#bar{display:flex;gap:4px;padding:8px 10px 0;max-width:520px;margin:auto}#bar i{flex:1;height:5px;border-radius:3px;background:#cfdceb}#bar i.on{background:#1fb5ea}
+#stt{text-align:center;font-weight:700;color:#4a6585;padding:4px;font-size:13px}
+main{max-width:520px;margin:auto;padding:4px 10px 90px}
+#pv{position:sticky;top:0;z-index:5;background:#f3f6fa;padding:4px 0;text-align:center}
+canvas#cv{width:min(100%,190px);aspect-ratio:1;border-radius:14px;background:#e6edf5}
+.card{background:#fff;border-radius:14px;padding:12px;margin:8px 0;box-shadow:0 1px 4px #0001}
+h3{margin:0 0 8px;font-size:15px;color:#12263f}h2{margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.sw{box-shadow:0 0 0 1px #cfdceb;border:3px solid transparent;border-radius:50%;aspect-ratio:1;padding:0;position:relative;cursor:pointer}
+.sw i{position:absolute;inset:22%;border-radius:50%}.sw.on{border-color:#1fb5ea}
+.sw b{position:absolute;top:-5px;left:-3px;font-size:10px;background:#12263f;color:#fff;border-radius:8px;padding:0 4px}
+#cn{text-align:center;font-weight:700;margin-top:8px}
+.row{display:flex;gap:8px}.row button{flex:1;padding:12px;border-radius:10px;border:2px solid #cfdceb;background:#fff;font-size:16px}
+.on2{border-color:#1fb5ea!important;background:#e2f6fe!important;font-weight:700}
+.fl{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.fb{padding:8px 4px;border-radius:10px;border:2px solid #cfdceb;background:#fff;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;display:block}
+.fb small{display:block;font:11px system-ui;color:#5d7391}
+input[type=text],textarea{width:100%;padding:12px;font-size:17px;border:2px solid #cfdceb;border-radius:10px;font-family:inherit}#tx{text-transform:uppercase;font-size:20px}
+small{color:#5d7391}.st{display:flex;align-items:center;gap:8px;margin-top:10px}.st b{flex:1}
+.st button{width:92px;padding:12px 0;border-radius:10px;border:2px solid #cfdceb;background:#fff;font-size:14px;font-weight:600}
+#msg{background:#ffe9e7;color:#b3261e;border-radius:10px;padding:6px 8px;font-weight:600;display:none;margin:4px 0;font-size:13px;text-align:left}
+#msg button{margin:4px 0 0 6px;background:#b3261e;color:#fff;border:0;border-radius:8px;padding:6px 10px;font-weight:700}
+#ok{color:#1b6b34;font-weight:700;font-size:13px}
+details{margin-top:10px}summary{color:#4a6585;font-weight:600}
+#nv{position:fixed;left:0;right:0;bottom:0;background:#fff;padding:10px;display:flex;gap:8px;box-shadow:0 -2px 8px #0002;z-index:8;max-width:520px;margin:auto}
+.nb{flex:1;padding:14px;border-radius:12px;border:2px solid #cfdceb;background:#fff;font-size:16px;font-weight:800}.pri{background:#1fb5ea;color:#fff;border-color:#1fb5ea}.nb:disabled{background:#b9c7d6;border-color:#b9c7d6;color:#fff}
+.step{display:none;text-align:center}.step .card{text-align:left}.step img{width:min(100%,340px);border-radius:14px}
+.bt{width:100%;padding:13px;border:0;border-radius:12px;background:#1fb5ea;color:#fff;font-size:16px;font-weight:800;margin-top:8px}.bt.alt{background:#fff;color:#12263f;border:2px solid #cfdceb}
+table{width:100%;border-collapse:collapse;text-align:left;margin:8px 0}td{padding:7px 4px;border-bottom:1px solid #e1e8f0}td:first-child{color:#5d7391;width:42%}
+#fnt{display:none;background:#fff3cd;padding:8px;text-align:center;font-size:13px}
+.sl{margin-top:14px;text-align:left}.lab{display:flex;justify-content:space-between;align-items:center}.sl input[type=range]{width:100%;height:34px;accent-color:#1fb5ea}</style></head><body>
+<header id="hd"></header><div id="fnt">Fonts could not load. Please connect to the internet and reload.</div>
+<div id="bar"><i></i><i></i><i></i><i></i><i></i></div><div id="stt"></div>
+<main>
+<div id="pv"><canvas id="cv" width="500" height="500"></canvas><div id="msg"></div></div>
+<section class="step" id="s1"><div class="card"><h3>Pick a color combination</h3><div class="grid" id="cg"></div><div id="cn"></div><small>👑 = most popular · First color = cap body, second = raised text and rim</small></div></section>
+<section class="step" id="s2"><div class="card"><h3>Choose a style</h3><div class="row"><button id="sw">Warped</button><button id="sp">Plain</button></div>
+<h3 style="margin-top:14px">Choose a font</h3><small>Shown with your text</small><div class="fl" id="fl"></div></div></section>
+<section class="step" id="s3"><div class="card"><h3>Type your text</h3><input type="text" id="tx" maxlength="24" value="WRONG HOUSE" autocomplete="off">
+<small>Put a space between words to start a new line (up to 3 lines).</small>
+<div class="sl"><div class="lab"><b>Text size</b><span id="sv"></span></div><input type="range" id="sz" min="3" max="20" step="0.1"><small id="sh"></small></div><div class="sl"><div class="lab"><b>Thickness</b><span id="tv"></span></div><input type="range" id="th" min="0" max="1" step="0.05"></div><div class="sl" id="rd"><div class="lab"><b>Roundness</b><span id="rv"></span></div><input type="range" id="ro" min="30" max="100" step="1"><div class="lab"><small>Boxy · fills corners</small><small>Round · hugs the cap</small></div></div><details id="adv"><summary>Advanced: space between lines</summary><div class="sl"><div class="lab"><b>Line spacing</b><span id="gv"></span></div><input type="range" id="lg" min="0.8" max="3" step="0.1"></div></details></div></section>
+<section class="step" id="s4"><h2>Your cap</h2><img id="i1"><h3 style="margin-top:12px">Is this okay?</h3><small>Tap "Yes, continue" to see the final specs, or go back to change anything.</small></section>
+<section class="step" id="s5"><h2>Final specs</h2><img id="i2"><div class="card"><h3>Order details (optional)</h3><input type="text" id="on" placeholder="Your name" maxlength="40"><textarea id="nt" rows="2" placeholder="Notes for the maker" maxlength="120" style="margin-top:8px"></textarea></div>
+<table id="sp2"></table><button class="bt" id="shr">Share / save picture</button><button class="bt alt" id="cpy">Copy specs as text</button><p><small>Send the picture or text to the maker. A screenshot of this screen works too.</small></p></section>
+</main>
+<nav id="nv"><button id="bk" class="nb">← Back</button><button id="nx" class="nb pri">Next →</button></nav>
+<script>
+const $=s=>document.getElementById(s);
+const C={Black:'#161616',Red:'#e31b1b',Pink:'#f58fbd',White:'#ffffff',Flesh:'#efc3a2',Blue:'#0a6cc4','Sky Blue':'#7fd0f0',Grey:'#9a9a9a',Brown:'#6a4025',Yellow:'#ffd800'};
+const CB="Black-White,Pink-White,Black-Red,White-Black,Blue-White,Red-White,Sky Blue-White,Black-Yellow,Pink-Grey,Sky Blue-Pink,Blue-Yellow,Red-Black,Black-Grey,Flesh-White,Pink-Flesh,Red-Yellow,Brown-White,Grey-Black,Sky Blue-Grey,Brown-Yellow".split(',').map(s=>s.split('-'));
+const WARP=[['Chango','Chango',400],['Titan One','Titan One',400],['Luckiest Guy','Luckiest Guy',400],['Bahcefs','Passion One',900],['Lilita One','Lilita One',400]];
+const PLAIN=[['Anton','Anton',400],['Bebas Neue','Bebas Neue',400],['League Spartan','League Spartan',800],['Forte','Racing Sans One',400],['Impact','Oswald',700],['Satisfy','Satisfy',400]];
+const S={combo:0,style:'warped',font:0,size:null,puff:.1,gap:.8,bulge:.75};
+const fs=(f,px)=>`${f[2]} ${px}px "${f[1]}"`, cur=()=>(S.style=='warped'?WARP:PLAIN)[S.font];
+const SC=.08, GAPMM=.45, RT=13.2;
+function crop(c){const x=c.getContext('2d'),d=x.getImageData(0,0,c.width,c.height).data;let a=c.width,b=0,t=c.height,u=0;
+ for(let j=0;j<c.height;j++)for(let i=0;i<c.width;i++)if(d[(j*c.width+i)*4+3]>20){if(i<a)a=i;if(i>b)b=i;if(j<t)t=j;if(j>u)u=j}
+ if(b<a)return{c,w:1,h:1};const o=document.createElement('canvas');o.width=b-a+1;o.height=u-t+1;o.getContext('2d').drawImage(c,a,t,o.width,o.height,0,0,o.width,o.height);return{c:o,w:o.width,h:o.height}}
+function src(text,f,puff){const px=140,c=document.createElement('canvas'),x=c.getContext('2d');x.font=fs(f,px);
+ const g=GAPMM/SC,adv=[...text].map(ch=>x.measureText(ch).width);c.width=Math.ceil(adv.reduce((a,b)=>a+b,0)+g*text.length+px);c.height=px*2;
+ x.font=fs(f,px);x.fillStyle=x.strokeStyle='#000';x.lineJoin='round';x.lineWidth=2*puff/SC;let cx=px/2;
+ [...text].forEach((ch,i)=>{x.fillText(ch,cx,px*1.4);if(puff>0)x.strokeText(ch,cx,px*1.4);cx+=adv[i]+g});return crop(c)}
+function ncomp(c){const x=c.getContext('2d'),w=c.width,h=c.height,d=x.getImageData(0,0,w,h).data,v=new Uint8Array(w*h);let n=0;
+ for(let s=0;s<w*h;s++){if(v[s]||d[s*4+3]<128)continue;n++;const st=[s];v[s]=1;while(st.length){const p=st.pop(),px=p%w;
+ for(const q of[px>0?p-1:-1,px<w-1?p+1:-1,p>=w?p-w:-1,p<w*h-w?p+w:-1])if(q>=0&&!v[q]&&d[q*4+3]>=128){v[q]=1;st.push(q)}}}return n}
+const stc={};function stats(f){const k=f[1];if(stc[k])return stc[k];const I=src('I',f,0),T=src('T',f,0),x=T.c.getContext('2d');
+ const col=Math.floor(T.w*.12),d=x.getImageData(col,0,1,T.h).data;let r=0,on=false;for(let j=0;j<T.h;j++){if(d[j*4+3]>128){on=true;r++}else if(on)break}
+ return stc[k]={stem:I.w/I.h,bar:r/T.h}}
+function solve(rt,n,renv,bu,fill,lg){let xe=fill*renv,w=[],hc=renv;for(let k=0;k<80;k++){const ue=Math.min(xe/renv,.995);hc=renv*Math.pow(1-ue*ue,(1-bu)/2);
+ const band=(2*hc-lg*(n-1))/n;w=rt.map(r=>Math.min(2*fill*renv,r*band));const nw=Math.max(...w)/2;if(Math.abs(nw-xe)<1e-6)break;xe=.5*(xe+nw)}return{w,hc}}
+const prof=(x,r)=>Math.pow(Math.max(1-(x/r)*(x/r),0),S.bulge/2);
+function layout(){const f=cur(),words=$('tx').value.trim().split(/\s+/).filter(Boolean).slice(0,3);if(!words.length)return{msgs:['Type some text']};
+ const up=f[0]!='Satisfy',L=words.map(w=>up?w.toUpperCase():w),n=L.length,puff=S.puff,lg=S.gap,warped=S.style=='warped';
+ const ln=L.map(w=>src(w,f,puff)),rt=ln.map(l=>l.w/l.h),st=stats(f),renv=RT-puff;let fit,fit08;
+ const plainFit=G=>{let lo=.5,hi=30;for(let k=0;k<40;k++){const S_=(lo+hi)/2,H=n*S_+(n-1)*G;let ok=true;
+  for(let i=0;i<n;i++){const yt=H/2-i*(S_+G),ym=Math.max(Math.abs(yt),Math.abs(yt-S_));if(Math.hypot(rt[i]*S_/2+puff,ym+puff)>RT)ok=false}ok?lo=S_:hi=S_}return lo};
+ const warpFit=G=>{const r=solve(rt,n,renv,S.bulge,.94,G);return(2*r.hc-G*(n-1))/n};
+ fit=warped?warpFit(lg):plainFit(lg);fit08=warped?warpFit(.8):plainFit(.8);
+ const req=S.size==null?fit:S.size,Sz=Math.min(req,fit),msgs=[];
+ let widths,hc2,Tm=1e9;
+ if(warped){widths=rt.map(r=>Math.min(2*.94*renv,r*Sz));hc2=(n*Sz+lg*(n-1))/2;
+  ln.forEach((l,i)=>{Tm=Math.min(Tm,st.stem*l.h*(widths[i]/l.w)+2*puff,st.bar*Sz*Math.pow(.1164,S.bulge/2)+2*puff)})}
+ else Tm=Math.min(st.stem*Sz,st.bar*Sz)+2*puff;
+ if(fit<5){if(n==1)msgs.push('Add a second line of text (put a space between words)');else if(lg>.8&&fit08>=5)msgs.push('Reduce line spacing');else msgs.push('Too many letters')}
+ else if(req<5)msgs.push('Increase text size (minimum 5 mm)');
+ if(Tm<.5&&!msgs.length)msgs.push('Text is too thin (minimum 0.5 mm): increase text size or thickness');
+ if(!up===false){const bad=L.some((w,i)=>ncomp(ln[i].c)>[...w].reduce((a,ch)=>a+ncomp(src(ch,f,puff).c),0));if(bad)msgs.push('Letters are touching: lower the thickness or text size')}
+ return{f,L,n,ln,Sz,fit,req,widths,hc2,Tm,msgs,warped,renv,lg}}
+function tint(c,col){const o=document.createElement('canvas');o.width=c.width;o.height=c.height;const x=o.getContext('2d');x.drawImage(c,0,0);x.globalCompositeOperation='source-in';x.fillStyle=col;x.fillRect(0,0,o.width,o.height);return o}
+function draw(cv,R){const px=cv.width,k=px/31,cx=px/2,x=cv.getContext('2d'),[b,t]=CB[S.combo];x.clearRect(0,0,px,px);
+ x.fillStyle=C[b];x.beginPath();x.arc(cx,cx,14.5*k,0,7);x.fill();x.strokeStyle=C[t];x.lineWidth=.8*k;x.beginPath();x.arc(cx,cx,14.1*k,0,7);x.stroke();
+ if(!R||R.msgs.length&&!R.ln)return;const ly=document.createElement('canvas');ly.width=ly.height=px;const l=ly.getContext('2d'),n=R.n;
+ R.ln.forEach((li,i)=>{const T=tint(li.c,C[t]);
+  if(!R.warped){const H=n*R.Sz+(n-1)*R.lg,yt=H/2-i*(R.Sz+R.lg),w=li.w/li.h*R.Sz;l.drawImage(T,cx-w/2*k,cx-yt*k,w*k,R.Sz*k)}
+  else{const W=R.widths[i];for(let xi=Math.floor(cx-W/2*k);xi<=Math.ceil(cx+W/2*k);xi++){const xm=(xi+.5-cx)/k,u=xm/W+.5;if(u<0||u>1)continue;
+   const sx=Math.min(T.width-1,Math.floor(u*T.width)),tt=R.hc2*prof(xm,R.renv),yt=tt*(1-2*i/n)-(i>0?R.lg/2:0),yb=tt*(1-2*(i+1)/n)+(i<n-1?R.lg/2:0);
+   l.drawImage(T,sx,0,1,T.height,xi,cx-yt*k,1.2,(yt-yb)*k)}}});
+ x.save();x.shadowColor='rgba(0,0,0,.35)';x.shadowBlur=3*k/10;x.shadowOffsetY=.25*k;x.drawImage(ly,0,0);x.restore()}
+const SHOP_NAME='',SHOP_CONTACT='';/* maker: type your shop name / contact between the quotes */
+const STEPS=['Colors','Style & font','Text & size','Review','Send to maker'],ORD={name:'',note:''};S.step=1;let R;
+const FIX=[[/second line/,'Split into two lines',()=>{const t=$('tx').value.trim(),m=Math.floor(t.length/2);$('tx').value=t.slice(0,m)+' '+t.slice(m)}],
+[/line spacing/,'Set spacing to 0.8 mm',()=>S.gap=.8],[/Increase text size/,'Set size to 5 mm',()=>S.size=5],
+[/too thin/,'Make letters bolder',()=>S.puff=Math.min(1,+(S.puff+.1).toFixed(2))],[/touching/,'Make letters thinner',()=>S.puff=Math.max(0,+(S.puff-.1).toFixed(2))],[/Too many/,'',0]];
+const fixOf=m=>FIX.find(f=>f[0].test(m));
+function save(){try{localStorage.setItem('capS',JSON.stringify({S,tx:$('tx').value,ORD}))}catch(e){}}
+function upd(){R=layout();if(R.fit){$('sz').max=Math.max(3,Math.floor(R.fit*10)/10);$('sz').value=R.Sz}$('sv').textContent=R.Sz?R.Sz.toFixed(1)+' mm':'';$('sh').textContent=R.Sz&&R.req>=R.fit?'Largest size that fits':'';$('th').value=S.puff;$('tv').textContent='+'+S.puff.toFixed(2)+' mm';$('ro').value=Math.round(S.bulge*100);$('rv').textContent=Math.round(S.bulge*100)+'%';$('rd').style.display=R.warped?'block':'none';$('lg').value=S.gap;$('gv').textContent=S.gap.toFixed(1)+' mm';$('adv').style.display=R.n>1?'block':'none';
+ const m=$('msg');m.style.display=R.msgs.length?'block':'none';m.innerHTML=R.msgs.map((s,i)=>{const f=fixOf(s);return'<div>⚠ '+s+(f&&f[1]?'<button data-i="'+i+'">'+f[1]+'</button>':'')+(/Too many/.test(s)?' – try shorter text':'')+'</div>'}).join('');
+ draw($('cv'),R);nav();save()}
+$('msg').onclick=e=>{const i=e.target.dataset.i;if(i==null)return;fixOf(R.msgs[+i])[2]();upd()};
+$('sz').oninput=e=>{S.size=+e.target.value;upd()};$('th').oninput=e=>{S.puff=+e.target.value;upd()};$('ro').oninput=e=>{S.bulge=+e.target.value/100;upd()};$('lg').oninput=e=>{S.gap=+e.target.value;upd()};
+function colors(){$('cg').innerHTML='';CB.forEach(([b,t],i)=>{const e=document.createElement('button');e.className='sw'+(i==S.combo?' on':'');e.style.background=C[b];
+ e.innerHTML='<i style="background:'+C[t]+'"></i><b>'+(i<3?'👑':'')+(i+1)+'</b>';e.onclick=()=>{S.combo=i;colors();upd()};$('cg').appendChild(e)});
+ $('cn').textContent=CB[S.combo][0]+' body · '+CB[S.combo][1]+' text'}
+function fonts(){$('sw').className=S.style=='warped'?'on2':'';$('sp').className=S.style=='plain'?'on2':'';$('fl').innerHTML='';
+ (S.style=='warped'?WARP:PLAIN).forEach((f,i)=>{const e=document.createElement('button');e.className='fb'+(i==S.font?' on2':'');const t=$('tx').value.trim()||f[0];
+  e.innerHTML='<span style="font:'+fs(f,19)+'">'+(f[0]=='Satisfy'?t:t.toUpperCase()).replace(/</g,'')+'</span><small>'+f[0]+'</small>';e.onclick=()=>{S.font=i;fonts();upd()};$('fl').appendChild(e)})}
+$('sw').onclick=()=>{S.style='warped';S.font=0;fonts();upd()};$('sp').onclick=()=>{S.style='plain';S.font=0;fonts();upd()};
+$('tx').oninput=()=>{fonts();upd()};
+function rows(){const[b,t]=CB[S.combo],r=[];if(SHOP_NAME)r.push(['Shop',SHOP_NAME+(SHOP_CONTACT?' · '+SHOP_CONTACT:'')]);
+ r.push(['Date',new Date().toLocaleDateString()]);if(ORD.name)r.push(['Customer',ORD.name]);
+ r.push(['Cap body color',b],['Text & rim color',t],['Style',S.style=='warped'?'Warped':'Plain'],['Font',R.f[0]],['Text',R.L.join(' / ')],['Lines',R.n],
+ ['Text size',R.Sz.toFixed(1)+' mm'+(R.warped?' (at centre)':'')],['Stroke thickness',R.Tm.toFixed(2)+' mm']);if(R.warped)r.push(['Roundness',Math.round(S.bulge*100)+'%']);if(R.n>1)r.push(['Line spacing',S.gap.toFixed(1)+' mm']);
+ r.push(['Rim border','0.8 mm'],['Cap size','29 mm wide'],['Text height','1.0 mm raised']);if(ORD.note)r.push(['Notes',ORD.note]);return r}
+function pic(px){const c=document.createElement('canvas');c.width=c.height=px;draw(c,R);return c}
+function go(n){S.step=n;for(let i=1;i<=5;i++)$('s'+i).style.display=i==n?'block':'none';document.querySelectorAll('#bar i').forEach((e,i)=>e.className=i<n?'on':'');
+ $('stt').textContent='Step '+n+' of 5 · '+STEPS[n-1];$('pv').style.display=n<4?'block':'none';$('bk').style.visibility=n>1?'visible':'hidden';$('nx').style.display=n==5?'none':'block';
+ $('bk').textContent=n==4?'No, edit':'← Back';$('nx').textContent=n==4?'Yes, continue':'Next →';
+ if(n==4)$('i1').src=pic(700).toDataURL();
+ if(n==5){$('i2').src=pic(700).toDataURL();$('on').value=ORD.name;$('nt').value=ORD.note;tbl()}nav();window.scrollTo(0,0);save()}
+function tbl(){$('sp2').innerHTML=rows().map(a=>'<tr><td>'+a[0]+'</td><td><b>'+String(a[1]).replace(/</g,'&lt;')+'</b></td></tr>').join('')}
+function nav(){$('nx').disabled=(S.step>=3&&S.step<=4)&&!!(R&&R.msgs.length)}
+$('bk').onclick=()=>go(S.step==4?3:S.step-1);$('nx').onclick=()=>go(S.step+1);
+$('on').oninput=e=>{ORD.name=e.target.value;tbl();save()};$('nt').oninput=e=>{ORD.note=e.target.value;tbl();save()};
+$('cpy').onclick=async()=>{const t=rows().map(a=>a[0]+': '+a[1]).join('\n');try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();document.execCommand('copy');a.remove()}
+ $('cpy').textContent='Copied ✓';setTimeout(()=>$('cpy').textContent='Copy specs as text',1600)};
+$('shr').onclick=()=>{const r=rows(),c=document.createElement('canvas');c.width=800;const x=c.getContext('2d'),lines=[];
+ r.forEach(a=>{const t=a[0]+': '+a[1];for(let i=0;i<t.length;i+=48)lines.push((i?'   ':'')+t.slice(i,i+48))});
+ c.height=140+560+lines.length*34+30;x.fillStyle='#fff';x.fillRect(0,0,800,c.height);x.fillStyle='#12263f';x.font='bold 34px sans-serif';x.textAlign='center';x.fillText(SHOP_NAME||'Pickleball Cap Order',400,60);
+ x.drawImage(pic(520),140,90);x.textAlign='left';x.font='24px sans-serif';lines.forEach((l,i)=>x.fillText(l,60,660+i*34));
+ c.toBlob(async b=>{const f=new File([b],'my-cap.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],title:'My cap'});return}catch(e){}}
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='my-cap.png';a.click()})};
+$('hd').textContent=SHOP_NAME||'Pickleball Cap Designer';
+try{const d=JSON.parse(localStorage.getItem('capS')||'null');if(d){Object.assign(S,d.S);Object.assign(ORD,d.ORD);$('tx').value=d.tx;if(S.combo>19||S.font>5)S.combo=S.font=0}}catch(e){}
+if(!S.step||S.step>5)S.step=1;if(S.step==5)S.step=4;
+colors();fonts();upd();go(S.step);
+Promise.all([...WARP,...PLAIN].map(f=>document.fonts.load(fs(f,50),'ABC'))).then(()=>{if(!document.fonts.check('50px "Chango"'))$('fnt').style.display='block';fonts();upd();if(S.step>=4)go(S.step)}).catch(()=>$('fnt').style.display='block');
+</script></body></html>
